@@ -5,7 +5,7 @@ import (
 	"strings"
 	"testing"
 
-	"com.secret.files/safe"
+	"com.gosafe/safe"
 )
 
 func TestEnc(t *testing.T) {

@@ -1,4 +1,4 @@
-module com.secret.files
+module com.gosafe
 
 go 1.23.0
 

@@ -2,6 +2,7 @@ package safe
 
 import (
 	"fmt"
+	"os"
 )
 
 func HideDir(opts Options) error {
@@ -12,7 +13,12 @@ func HideDir(opts Options) error {
 	}
 	for i := range src_files {
 		src_file, dest_file := src_files[i], dest_files[i]
-		EncryptFile(src_file, dest_file, opts.Password)
+		err := EncryptFile(src_file, dest_file, opts.Password)
+		if err != nil {
+			fmt.Printf("Encryt failed for %s", src_file)
+			continue
+		}
+		os.Remove(src_file)
 	}
 	return nil
 }

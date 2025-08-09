@@ -4,10 +4,10 @@ import (
 	"fmt"
 	"os"
 
-	"com.secret.files/safe"
+	"com.gosafe/safe"
 )
 
-func main() {
+func GetPassword() string {
 	password := ""
 	for {
 		password = safe.ReadPassword()
@@ -20,17 +20,23 @@ func main() {
 			break
 		}
 	}
+	return password
+}
 
-	if len(os.Args) < 5 {
-		fmt.Println("Usage: gohide <encrypt|decrypt> <source> <dest> <password>")
+func main() {
+
+	if len(os.Args) < 4 {
+		fmt.Println("Usage: gohide <hide|show|encrypt|decrypt> <source> <dest>")
 		return
 	}
+
+	password := GetPassword()
 
 	ops := safe.Options{
 		Mode:     os.Args[1],
 		Src:      os.Args[2],
 		Dest:     os.Args[3],
-		Password: os.Args[4],
+		Password: password,
 	}
 
 	safe.Run(ops)
