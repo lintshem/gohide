@@ -33,8 +33,8 @@ func EncryptFile(srcPath, dstPath, password string) error {
 	return os.WriteFile(dstPath, encrypted, 0600)
 }
 
-func ReadPassword() string {
-	fmt.Print("Enter Password: ")
+func ReadPassword(mes string) string {
+	fmt.Print(mes)
 	bytePassword, err := term.ReadPassword(int(syscall.Stdin))
 	if err != nil {
 		log.Fatal(err)
