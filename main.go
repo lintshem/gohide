@@ -3,6 +3,7 @@ package main
 import (
 	"fmt"
 	"os"
+	"strings"
 
 	"com.gosafe/safe"
 )
@@ -39,10 +40,15 @@ func main() {
 		return
 	}
 
-	password := GetPassword()
+	mode := strings.ToLower(os.Args[1])
+	password := ""
+
+	if !strings.HasPrefix(mode, "c") {
+		password = GetPassword()
+	}
 
 	ops := safe.Options{
-		Mode:     os.Args[1],
+		Mode:     mode,
 		Src:      GetOsArg(2, "."),
 		Dest:     GetOsArg(3, "."),
 		Password: password,

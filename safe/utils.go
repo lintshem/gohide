@@ -9,6 +9,8 @@ import (
 	"path/filepath"
 	"regexp"
 	"strings"
+
+	"github.com/samber/lo"
 )
 
 func deriveKey(password string) *[32]byte {
@@ -49,7 +51,8 @@ func GetFilePaths(startDir string) ([]string, error) {
 		if err != nil {
 			return err
 		}
-		if !info.IsDir() && filepath.Ext(rel) != ".enc" {
+		ignoreExts := []string{".enc", ".zip"}
+		if !info.IsDir() && lo.Contains(ignoreExts, filepath.Ext(rel)) {
 			files = append(files, rel)
 		}
 		return nil
@@ -70,7 +73,11 @@ func ReadHideRules() []string {
 
 	scanner := bufio.NewScanner(file)
 	for scanner.Scan() {
-		lines = append(lines, scanner.Text())
+		line := scanner.Text()
+		line = strings.TrimSpace(line)
+		if len(line) > 0 {
+			lines = append(lines, line)
+		}
 	}
 	return lines
 }
