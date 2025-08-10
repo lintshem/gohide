@@ -11,7 +11,7 @@ func GetPassword() string {
 	password := ""
 	for {
 		password = safe.ReadPassword("Enter Password: ")
-		if len(password) < 5 {
+		if len(password) < 3 {
 			fmt.Println("Enter 3+ characters")
 			continue
 		}
@@ -34,7 +34,7 @@ func GetOsArg(pos int, def string) string {
 
 func main() {
 
-	if len(os.Args) < 1 {
+	if len(os.Args) < 2 {
 		fmt.Println("Usage: gohide <hide|show|encrypt|decrypt> <source> <dest>")
 		return
 	}

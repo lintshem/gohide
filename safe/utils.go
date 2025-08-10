@@ -9,8 +9,6 @@ import (
 	"path/filepath"
 	"regexp"
 	"strings"
-
-	"github.com/samber/lo"
 )
 
 func deriveKey(password string) *[32]byte {
@@ -83,25 +81,27 @@ func GetFilteredPaths(startDir string) ([]string, []string, error) {
 	src_files := []string{}
 	dest_files := []string{}
 
+	fmt.Println("Hide rules:", hide_rules)
+
 	for _, file_path := range files {
-		_, found := lo.Find(hide_rules, func(hide_file string) bool {
-			matched, err := regexp.MatchString(hide_file, file_path)
+		ignore := false
+		for _, rule_pattern := range hide_rules {
+			matched, err := regexp.MatchString(rule_pattern, file_path)
 			if err != nil {
-				fmt.Println("hide pattern error: ", err, "pattern:", hide_file)
+				fmt.Println("hide pattern error: ", err, "pattern:", rule_pattern)
 			}
 			if matched {
-				return false
+				ignore = true
 			}
-			return true
-		})
-		if found {
+
+		}
+		if !ignore {
 			dest_path := fmt.Sprintf("%s.enc", file_path)
-			// EncryptFile(file_path, dest_path, opts.Password)
-			// fmt.Printf("Enc %s->%s\n", file_path, dest_path)
 			src_files = append(src_files, file_path)
 			dest_files = append(dest_files, dest_path)
 		}
 	}
+	fmt.Println(src_files)
 	return src_files, dest_files, err
 }
 
@@ -109,7 +109,7 @@ func Consume(args ...any) {
 
 }
 
-func GetEncryptedFiles(startDir string) []string {
+func GetEncryptedFiles(startDir string) ([]string, error) {
 	files := []string{}
 
 	err := filepath.Walk(startDir, func(path string, info os.FileInfo, err error) error {
@@ -137,5 +137,5 @@ func GetEncryptedFiles(startDir string) []string {
 		log.Fatal("Reading files failed")
 	}
 
-	return files
+	return files, err
 }

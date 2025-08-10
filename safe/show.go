@@ -7,7 +7,10 @@ import (
 )
 
 func ShowDir(opts Options) error {
-	src_files := GetEncryptedFiles(opts.Src)
+	src_files, err := GetEncryptedFiles(opts.Src)
+	if err != nil {
+		return err
+	}
 	if len(src_files) == 0 {
 		fmt.Println("No encrypted files")
 	}
@@ -23,5 +26,6 @@ func ShowDir(opts Options) error {
 		}
 		os.Remove(src_file)
 	}
+	fmt.Printf("Decrypted %d files\n", len(src_files))
 	return nil
 }

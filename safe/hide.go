@@ -20,5 +20,6 @@ func HideDir(opts Options) error {
 		}
 		os.Remove(src_file)
 	}
+	fmt.Printf("Encrypted %d files\n", len(src_files))
 	return nil
 }
