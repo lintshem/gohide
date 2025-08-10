@@ -15,7 +15,7 @@ func HideDir(opts Options) error {
 		src_file, dest_file := src_files[i], dest_files[i]
 		err := EncryptFile(src_file, dest_file, opts.Password)
 		if err != nil {
-			fmt.Printf("Encryt failed for %s", src_file)
+			fmt.Printf("Encrytion failed for %s", src_file)
 			continue
 		}
 		os.Remove(src_file)
