@@ -61,7 +61,9 @@ func loadHideIgnore(root string) []string {
 
 // shouldSkip checks if a name matches any ignore pattern.
 func shouldSkip(name string, patterns []string) bool {
-	if strings.HasPrefix(name, ".") {
+	if strings.HasPrefix(name, ".") ||
+		strings.HasSuffix(name, ".zip") ||
+		strings.HasSuffix(name, ".enc") {
 		return true
 	}
 	for _, pattern := range patterns {
