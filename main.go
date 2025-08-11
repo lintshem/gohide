@@ -36,7 +36,7 @@ func GetOsArg(pos int, def string) string {
 func main() {
 
 	if len(os.Args) < 2 {
-		fmt.Println("Usage: gohide <hide|show|encrypt|decrypt> <source> <dest>")
+		fmt.Println("Usage: gohide <zip|hide|show|encrypt|decrypt> <source> <dest>")
 		return
 	}
 

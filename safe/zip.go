@@ -63,7 +63,7 @@ func ZipDir(opts Options) error {
 
 	zipWriter.Close()
 
-	time.Sleep(time.Duration(time.Duration.Seconds(1)))
+	time.Sleep(time.Duration(time.Duration.Seconds(3)))
 
 	// Encrypt the zip
 	zip_out_path := fmt.Sprintf("%s.enc", zip_file_path)
@@ -72,7 +72,7 @@ func ZipDir(opts Options) error {
 		fmt.Printf("Encryption failed for %s: %v\n", opts.Src, err)
 	}
 
-	// os.Remove(zip_file_path)
+	os.Remove(zip_file_path)
 	fmt.Printf("Zipped and encrypted %d files\n", len(src_files))
 	return nil
 }

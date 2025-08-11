@@ -66,3 +66,15 @@ func TestPrints(t *testing.T) {
 	// p := safe.SafeRead()
 
 }
+
+func TestWalkDir(t *testing.T) {
+	files, err := safe.WalkDir(".")
+	if err != nil {
+		fmt.Println("Error:", err)
+		return
+	}
+	for _, f := range files {
+		fmt.Println(f)
+	}
+	fmt.Println()
+}
