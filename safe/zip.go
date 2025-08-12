@@ -17,6 +17,9 @@ func ZipDir(opts Options) error {
 	}
 
 	zip_file_path := "out.zip"
+	if len(opts.Dest) > 2 {
+		zip_file_path = opts.Dest
+	}
 	zip_file, err := os.Create(zip_file_path)
 	if err != nil {
 		return fmt.Errorf("cannot create zip: %w", err)
